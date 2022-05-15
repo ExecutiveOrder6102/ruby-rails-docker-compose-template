@@ -1,0 +1,15 @@
+# Bear in mind variables in here will be interepreted in the bash format
+MAKE_ENV=local
+COMPOSE_PROJECT_NAME=docker_rails
+SOURCE_RUBY_IMAGE_VER=latest
+RACK_ENV=development
+RAILS_DB_HOST=postgres
+POSTGRES_USER=rails
+POSTGRES_PASSWORD=postgres
+PGADMIN_DEFAULT_EMAIL=admin@admin.com
+PGADMIN_DEFAULT_PASSWORD=postgres
+PGADMIN_LISTEN_PORT=80
+PGADMIN_CONFIG_SERVER_MODE='False'
+PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED='False'
+# Example - if you need a literal $ passing through you will need to pass in $$
+EXAMPLE_REFERRING_TO_ANOTHER_ENV=$$POSTGRES_USER

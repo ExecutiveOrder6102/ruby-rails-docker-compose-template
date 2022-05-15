@@ -1,0 +1,44 @@
+version: "3.9"
+volumes:
+  postgresql_data: # Use specific volume for this to prevent permission issues
+services:
+  postgres:
+    image: postgres # No constraint on image version, consider later
+    env_file:
+      - local.env
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4 # No constraint on image version, consider later
+    env_file:
+      - ./local.env
+    ports:
+      - "8080:80"
+    volumes:
+      - ./.docker/pgadmin/servers.json:/pgadmin4/servers.json # Imports the db information for you
+      - ./.docker/pgadmin/pgpass:/pgadmin4/pgpass # Stores the password to save you putting it in
+    # Permission related issues around reading the pgpass file
+    entrypoint: >
+      /bin/sh -c "
+      cp -f /pgadmin4/pgpass /var/lib/pgadmin/;
+      chmod 600 /var/lib/pgadmin/pgpass;
+      chown pgadmin:pgadmin /var/lib/pgadmin/pgpass;
+      /entrypoint.sh
+      "
+    depends_on:
+      postgres:
+        condition: service_started
+  web:
+    build:
+      context: .
+      args:
+        - SOURCE_RUBY_IMAGE_VER=$SOURCE_RUBY_IMAGE_VER
+    env_file:
+      - ./local.env
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_started
