@@ -19,6 +19,7 @@ This repo creates a local environment with docker-compose which provides you wit
       - `POSTGRES_USER`
       - `POSTGRES_PASSWORD`
     - Note: You will need to ensure that `config/database.yml` are reading these variables
+    - This does raise the question of "why not set postgres to trust, remove all auth", however I don't believe in devs having the habit of not having any credentials between services. Especially when connecting to DB's, only takes one person to run the wrong script and possibly wipe a staging/dev DB in the wrong environment.
 - pgAdmin in DESKTOP mode [running on port 8080](localhost:8080), no password required
   - automatically imported credentials for the db connection string, no configuration required. Just expand and go straight into the db! ![](docs/img/pgadmin.png) Wow, magic 🌈. 
   ***Certainly not a massive pain in the backside to get it work, I'm not annoyed whilst writing this. Not at all***
@@ -57,6 +58,14 @@ BUILD_ENV=local make init
 Creating local.env 🏡
 Creating pgpass credentials 🔑
 Creating pgadmin server connection string 🔗
+```
+
+**FYI** You must add each database your local environment wishes to create to pgpass.tpl, otherwise pgAdmin will not be able to connect to those databases after they are created. Gives a vague error about not providing a password, as you are unable to set a password for the entire database server. You must have one for each database.
+
+```sh
+$RAILS_DB_HOST:5432:postgres:$POSTGRES_USER:$POSTGRES_PASSWORD
+$RAILS_DB_HOST:5432:development:$POSTGRES_USER:$POSTGRES_PASSWORD
+$RAILS_DB_HOST:5432:<example>:$POSTGRES_USER:$POSTGRES_PASSWORD
 ```
 
 These are mounted to the pgadmin container to autocreate your connection to the postgres db:
