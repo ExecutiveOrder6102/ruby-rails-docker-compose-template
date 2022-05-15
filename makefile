@@ -55,13 +55,13 @@ db-logs:
 	@docker-compose logs -f postgres
 
 db-shell:
-	@docker-compose exec -it postgres /bin/sh
+	@docker-compose exec -it postgres /bin/bash
 
 web-logs:
 	@docker-compose logs -f web
 
 web-shell:
-	@docker-compose exec -it web /bin/sh
+	@docker-compose exec -it web /bin/bash
 
 stop:
 	@echo "Stopping Docker services 🛑:";
