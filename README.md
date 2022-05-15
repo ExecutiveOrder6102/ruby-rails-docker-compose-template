@@ -24,6 +24,8 @@ This repo creates a local environment with docker-compose which provides you wit
   ***Certainly not a massive pain in the backside to get it work, I'm not annoyed whilst writing this. Not at all***
 - Most importantly, cringe command output emojiis.
 
+This repo was written on MacOS, there *shouldn't* be any differences running this on Linux. But just bear that in mind
+
 ## Key areas in the repo
 The following are to note within the repo:
 - makefile
@@ -42,10 +44,10 @@ There's a requirement to pass a BUILD_ENV variable upon calling make, this is to
 
 However pipelines should be getting their variables elsewhere via secrets etc.
 
-### Running make build
+### Running make init
 
 #### Creating Templates
-So running `BUILD_ENV=local make build` will kick off creating template files for you, this will create a local.env file in the root of the repo, as well as create:
+So running `BUILD_ENV=local make init` will kick off by creating template files for you, this will create a local.env file in the root of the repo as well as create:
 - `.docker/pgadmin/pgpass`
 - `.docker/pgadmin/servers.json`
 
@@ -84,7 +86,7 @@ pgadmin:
 You will also notice a custom entrypoint, this is because pgAdmin reads pgpass files relative to the logged in user, so you have to faff about moving it to a common location that's accessible by that user. But also changing the permissions of the file to be 600.
 
 #### docker-compose build
-The next step will perform docker build, passing through the ruby image version via the local.env file templated via .dev.makerc. There is an assumption to assume "latest" if the argument is not passed to the dockerfile.
+The next step within make build will perform docker-compose, passing through the ruby image version via the local.env file templated via .dev.makerc. There is an assumption to assume "latest" if the argument is not passed to the dockerfile. Though in reality this would be an assumption for the baseline supported version you're running in production
 
 The dockerfile itself will copy the contents of the repo, ignoring whatever is specified in the .dockerignore file. **Ensure nothing sensitive can be built into these containers**
 
