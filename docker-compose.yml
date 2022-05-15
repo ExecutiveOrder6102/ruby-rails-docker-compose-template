@@ -32,7 +32,7 @@ services:
     build:
       context: .
       args:
-        - SOURCE_RUBY_IMAGE_VER=$SOURCE_RUBY_IMAGE_VER
+        - SOURCE_RUBY_IMAGE_VER=${SOURCE_RUBY_IMAGE_VER:-default}
     env_file:
       - ./local.env
     volumes:
