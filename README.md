@@ -2,7 +2,7 @@
 
 ## Overview
 
-Taking a bit of inspiration from the [3musketeers initiative](https://3musketeers.io), I have spent some time mucking about with rails envrionments
+Taking a bit of inspiration from the [3musketeers initiative](https://3musketeersdev.netlify.app), I have spent some time mucking about with rails envrionments
 
 Requirements:
 - [docker](https://docs.docker.com/engine/installation/)
